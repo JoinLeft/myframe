@@ -1,0 +1,11 @@
+{
+    "name": "joinleft/myframe",
+    "description": "my frame",
+    "authors": [
+        {
+            "name": "jiang",
+            "email": "2418952171@qq.com"
+        }
+    ],
+    "require": {}
+}
