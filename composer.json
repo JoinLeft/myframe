@@ -7,5 +7,8 @@
             "email": "2418952171@qq.com"
         }
     ],
-    "require": {}
+    "require": {
+        "monolog/monolog": "1.2.*",
+        "nikic/fast-route": "^1.2"
+    }
 }
