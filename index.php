@@ -13,3 +13,4 @@ $log = new Logger('name');
 $log->pushHandler(new StreamHandler('your.log', Logger::WARNING));
 $log->warn('Foo');
 $log->err('Bar');
+//测试
