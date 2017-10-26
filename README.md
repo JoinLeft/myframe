@@ -10,7 +10,8 @@
   		- [普通下载](#普通下载)
   		- [断点续传](#断点续传)
 - [PHP5](#php5)
-	- [类的高级用法](#类的高级用法) 
+	- [新增特性](#新增特性 "新增特性")
+		- [类的高级用法](#类的高级用法) 
 		- [instanceof 操作符](#instanceof-操作符)
 		- [final 关键字](#final-关键字)
 		- [clone 关键字](#clone-关键字)
@@ -21,9 +22,16 @@
 		- [对象类型提示](#对象类型提示)
 		- [函数调用](#函数调用)
 		- [继承类实现Iterator接口](#继承类实现Iterator接口)
-		- [__autoload()方法](#__autoload()方法)
+		- [__autoload()方法](#__autoload方法)
+		- [foreach 函数支持引用](#foreach-函数支持引用)
+		- [Tidy扩展](#tidy扩展 "Tidy扩展")
+	- [基础用法](#基础用法 "基础用法")
+		- [变量](#变量) 
+			- [变量的间接引用](#变量的间接引用 "变量的间接引用")
+
 
 ----------
+
 
 
 # 进阶学习
@@ -292,12 +300,13 @@ class FileDownload
 
 ?>
 
-
 ```
     
 
 
 # PHP5
+
+## **新增特性**
 
 ## 类的高级用法
 
@@ -323,7 +332,6 @@ class ExtendClass extends MyClass {
 
 ```
 
-
 ### clone 关键字
 
 ```php
@@ -336,71 +344,52 @@ class MyClass {
     }
 }
 $obj = new MyClass();
-?>
 
 $obj_copy = colne $obj; //克隆一个对象
 
 
 ```
 
-
 ### const 关键字
 
 ```php
 
-<?php
-
-	//用来定义在类中使用的常量(注意：在类中使用常量的时候都要使用这个)
-	class MyClass {
-	    const SUCESS = "Sucess";
-	}
-	print MyClass::SUCESS
-
-?>
+//用来定义在类中使用的常量(注意：在类中使用常量的时候都要使用这个)
+class MyClass {
+    const SUCESS = "Sucess";
+}
+print MyClass::SUCESS
 
 ```
-
 
 ### 静态成员和静态方法
 
 ```php
 
-<?php
-
-	//类的定义现在包含静态成员（属性），可以通过类自身来访问。通常用的最多的是单例模式
-	class Singleton {
-	    //静态成员
-	    static private $instance = NULL;
-	    //单例模式通常也定义 __clone方法,防止通过外部克隆当前类
-	    private function __clone(){
-	    }
-	    //私有的构造类，保证外部无法访问
-	    private function __construct() {
-	    }
-	    //静态方法
-	    static public function getInstance() {
-	        if (self::$instance == NULL) {
-	            self::$instance = new Singleton();
-	        }
-	        return self::$instance;
-	    }
-	}
-
-
-
-?>
+//类的定义现在包含静态成员（属性），可以通过类自身来访问。通常用的最多的是单例模式
+class Singleton {
+    //静态成员
+    static private $instance = NULL;
+    //单例模式通常也定义 __clone方法,防止通过外部克隆当前类
+    private function __clone(){
+    }
+    //私有的构造类，保证外部无法访问
+    private function __construct() {
+    }
+    //静态方法
+    static public function getInstance() {
+        if (self::$instance == NULL) {
+            self::$instance = new Singleton();
+        }
+        return self::$instance;
+    }
+}
 
 ```
-
-
-
-
 
 ### 抽象类
 
 ```php
-
-<?php
 
 //把类声明为抽象类可以防止它被实例化。但是你可以继承一个抽象类：
 abstract class MyBaseClass{
@@ -409,7 +398,6 @@ abstract class MyBaseClass{
     }
 }
 
-?>
 	
 ```
 
@@ -418,14 +406,10 @@ abstract class MyBaseClass{
 
 ```php
 
-<?php
-
 //把方法声明为抽象，以便在继承的子类中再去定义。包含抽象方法的类本身必须是一个抽象类：
 abstract class MyClass{
     abstract function display();
-}		
-
-?>
+}
 
 ```
 
@@ -435,8 +419,6 @@ abstract class MyClass{
     
 ```php
 
-<?php
-
 //函数声明中可以对参数进行对象类型提示。如果函数调用的时候没有传递正确的对象类型，系统会报错
 class MyClass() {
 }
@@ -444,15 +426,11 @@ function expectsMyClass(MyClass $obj) {
     //也就是这个对象必须是指定的MyClass对象的实例
 }
 
-?>
-
 ```
 
 ### 函数调用
 
 ```php
-
-<?php
 
 //PHP4
 $dummy = $obj->method();
@@ -461,14 +439,10 @@ $dummy->method2();
 //PHP5开始支持链式函数调用
 $obj->method()->method2();
 
-?>
-
 ```
 ### 继承类实现Iterator接口
 
 ```php
-
-<?php
 
 //PHP5允许PHP类和PHP继承类实现Iterator接口。在实现迭代接口后，你可以用foreach语言结构遍历一个类的实例：
 
@@ -477,19 +451,14 @@ foreach($obj as $value) {
     print "$value";
 }
 
-?>
-
 ```
 
 
-### __autoload()方法
+### __autoload方法
 
     在PHP5中，你可以定义一个__autoload()函数，它在你需要使用一个未定义类的时候自动调用。通过调用这个函数，脚本引擎在PHP抛出类未定义的错误之前提供最后一次加载类的机会：
 
 ```php
-
-<?php
-
 
 function __autoload($class_name) {
     include_once($class_name."php");
@@ -513,9 +482,6 @@ try {
 
 }
 
-?>
-
-
 ```
 
 
@@ -533,13 +499,8 @@ foreach ($arr as $key => &$value) {
 }
 
 //给引用参数设置默认值
+
 //你可能认为只有 传递值的参数可以设置默认值，现在PHP5中也可以给引用参数设置默认值
-
-```
-
-
-```php
-
 function my_func(&$arg = null) {
     if ($arg == null) {
         print '$arg is empty';
@@ -549,51 +510,44 @@ my_func();
 
 ```
 
->**新增SOAP支持**
+### 新增SOAP支持
 
     SOAP 是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息。在我们的 SOAP 教程中，你将了解到什么是 SOAP，以及它如何在应用程序之间交换信息。
 
 
->**Tidy扩展**
+### Tidy扩展
 
     用于修复和美化html
 
->**Perl扩展**
+### Perl扩展
 
     用来调用Perl脚本、使用Perl类和在PHP中使用Perl的其他功能。
 
-**注释**
-
->**三种注释方式**
-
-    /*
-        跨多行注释
-     */  
-     
-    // 行的末尾结束
-    
-     # 行的末尾结束
-    
->**变量**
-
-    特殊数组 $GLOBALS[]
-    $PI = 5;
-    $a = $GLOBALS['PI']; //获取到的值同上一行
-
->>**变量的间接引用**
-
-    变量的间接引用使用两个 $ 符号
-    $name = "John";
-    $$name = "user";
-    print $John;  //这个变量被定义是因为上一行的间接引用 使得这个变量生效
-    //通过在变量的前面增加附加的 $ 标记，你可以任意增加引用次数
-    $$$name = 'user1';
-    print $user; //这个变量也会被定义
+----------
 
 
->**管理变量**
+## **基础用法**
+----------
+## 变量
 
->> **isset()**
+
+### 变量的间接引用
+
+```php
+
+//变量的间接引用使用两个 $ 符号
+$name = "John";
+$$name = "user";
+print $John;  //这个变量被定义是因为上一行的间接引用 使得这个变量生效
+//通过在变量的前面增加附加的 $ 标记，你可以任意增加引用次数
+$$$name = 'user1';
+print $user; //这个变量也会被定义
+
+```
+
+### 管理变量
+
+#### isset()
     
     isset()用来判断某个变量是否已经声明。它返回一个布尔值，如果变量已经被设置就返回true,反之返回false，或者当变量的值被设定为NULL的时候，它也返回false.
     
