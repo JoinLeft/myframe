@@ -280,7 +280,7 @@ class FileDownload
     
 
 
-## 1. PHP5新特性
+##PHP5新特性
 
 **PHP5中新增类的高级用法**
 >**instanceof 操作符**
