@@ -309,19 +309,17 @@ class FileDownload
 
 ```php
 
-<?php
-	//用来标识方法，使其不能被子类重载
-	class MyClass {
-	    final function method() {}
-	}
-	
-	//用来标识类，使其不能被继承
-	final class MyClass {
-	}
-	class ExtendClass extends MyClass {
-	    //这个地方不能继承一个被final修饰的类
-	}
-?>
+//用来标识方法，使其不能被子类重载
+class MyClass {
+    final function method() {}
+}
+
+//用来标识类，使其不能被继承
+final class MyClass {
+}
+class ExtendClass extends MyClass {
+    //这个地方不能继承一个被final修饰的类
+}
 
 ```
 
@@ -330,19 +328,18 @@ class FileDownload
 
 ```php
 
-<?php
-	//你可以再类中声明一个__clone()方法，它将在克隆过程中被调用（调用的过程，在属性和方法从源对象复制过来以后进行）
-	
-	class MyClass {
-	    function __clone() {
-	        echo "对象正在被克隆";
-	    }
-	}
-	$obj = new MyClass();
-	?>
-	
-	$obj_copy = colne $obj; //克隆一个对象
+//你可以再类中声明一个__clone()方法，它将在克隆过程中被调用（调用的过程，在属性和方法从源对象复制过来以后进行）
+
+class MyClass {
+    function __clone() {
+        echo "对象正在被克隆";
+    }
+}
+$obj = new MyClass();
 ?>
+
+$obj_copy = colne $obj; //克隆一个对象
+
 
 ```
 
